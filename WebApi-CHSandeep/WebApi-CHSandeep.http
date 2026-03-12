@@ -1,0 +1,6 @@
+@WebApi_CHSandeep_HostAddress = http://localhost:5067
+
+GET {{WebApi_CHSandeep_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
