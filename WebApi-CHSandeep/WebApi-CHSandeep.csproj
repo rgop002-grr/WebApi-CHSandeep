@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WebApplication2\BussinessLayer\BussinessLayer.csproj" />
-    <ProjectReference Include="..\..\WebApplication2\RepositoryLayer\RepositoryLayer.csproj" />
+    <ProjectReference Include="..\BussinessLayer\BussinessLayer.csproj" />
+    <ProjectReference Include="..\RepositoryLayer\RepositoryLayer.csproj" />
   </ItemGroup>
 
 </Project>
