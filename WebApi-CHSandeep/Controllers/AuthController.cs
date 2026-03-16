@@ -19,7 +19,7 @@ namespace WebApi_CHSandeep.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDto loginDTO)
         {
-            var token = _authBussiness.Login(loginDTO);
+            var token = _authBussiness.Authenticate(loginDTO);
 
             if (token == null)
                 return Unauthorized();

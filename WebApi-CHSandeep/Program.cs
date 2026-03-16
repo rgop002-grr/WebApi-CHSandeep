@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RepositoryLayer.IRepository;
-using RepositoryLayer.JwtHelpers;
+using RepositoryLayer.JwtRelated;
 using RepositoryLayer.Models;
 using RepositoryLayer.Repository;
 using Serilog;
