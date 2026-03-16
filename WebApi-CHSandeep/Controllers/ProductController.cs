@@ -1,5 +1,6 @@
 ﻿using BussinessLayer.Business;
 using BussinessLayer.IBusiness;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.ModelDto;
@@ -7,6 +8,7 @@ using RepositoryLayer.Models;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize(Roles = "User")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
