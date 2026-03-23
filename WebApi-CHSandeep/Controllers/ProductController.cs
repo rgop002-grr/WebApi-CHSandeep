@@ -1,5 +1,6 @@
 ﻿using BussinessLayer.Business;
 using BussinessLayer.IBusiness;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.ModelDto;
@@ -7,6 +8,7 @@ using RepositoryLayer.Models;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize(Roles = "User")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -21,18 +23,24 @@ namespace WebApplication2.Controllers
         [HttpGet("ProductDetails")]
         public IActionResult GetProductDetails()
         {
-            _logger.LogInformation("This method is getting Product details");
+            _logger.LogInformation("Fetching product details");
+
             try
             {
-            List<ProductDto> res= _bussiness.GetProducts();
+                var res = _bussiness.GetProducts();
+
+                if (res == null || !res.Any())
+                {
+                    return NotFound("No products available");
+                }
+
                 return Ok(res);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex, "Error occurred");
+                return StatusCode(500, "Internal Server Error");
             }
-            
         }
     }
 }

@@ -16,6 +16,7 @@ public partial class SandeepContext : DbContext
     }
 
     public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -34,7 +35,31 @@ public partial class SandeepContext : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
-    }
+    
 
+
+    
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+
+            entity.HasKey(x => x.Id);
+
+            entity.Property(x => x.Username)
+                  .IsRequired()
+                  .HasMaxLength(100);
+
+            entity.Property(x => x.Password)
+                  .IsRequired()
+                  .HasMaxLength(100);
+
+            entity.Property(x => x.Role)
+                  .IsRequired()
+                  .HasMaxLength(50);
+        });
+    }
+    
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
