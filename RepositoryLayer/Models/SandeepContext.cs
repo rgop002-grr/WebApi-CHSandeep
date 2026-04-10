@@ -17,6 +17,7 @@ public partial class SandeepContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -58,6 +59,20 @@ public partial class SandeepContext : DbContext
             entity.Property(x => x.Role)
                   .IsRequired()
                   .HasMaxLength(50);
+            // One-to-many relationship with RefreshTokens
+            entity.HasMany(u => u.RefreshTokens)
+                  .WithOne(rt => rt.User)
+                  .HasForeignKey(rt => rt.UserId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(rt => rt.RftId); // PK
+            entity.Property(rt => rt.Token).IsRequired();
+            entity.Property(rt => rt.Created).IsRequired();
+            entity.Property(rt => rt.ExpiryDate).IsRequired();
+            entity.Property(rt => rt.IsRevoked).IsRequired().HasDefaultValue(false);
         });
     }
     

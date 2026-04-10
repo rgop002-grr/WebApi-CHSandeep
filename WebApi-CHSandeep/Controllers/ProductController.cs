@@ -36,5 +36,75 @@ namespace WebApplication2.Controllers
             }
             
         }
+
+        [HttpPost("InsertingProDetails")]
+        public async Task<IActionResult> AddingProdetails(ProductDto product)
+        {
+            try
+            {
+                var res =await _bussiness.AddProductAsync(product);
+                return Ok("Records inserted sucessfully");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPut("UpdateProDetails")]
+        public async Task<IActionResult> UpdateProDetails(ProductDto product)
+        {
+            try
+            {
+                if (product == null)
+                    return BadRequest("Invalid data");
+
+                var result = await _bussiness.UpdateProductAsync(product);
+
+                if (!result)
+                    return NotFound("Product not found");
+
+                return Ok("Product updated successfully");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpDelete("DeleteProduct")]
+        public async Task<IActionResult> DeleteProduct(int id) // if using query param
+        {
+            try
+            {
+                if (id <= 0)
+                    return BadRequest("Id must be greater than zero");
+
+                var deleted = await _bussiness.DeleteProductAsync(id);
+
+                if (!deleted)
+                    return NotFound("Product not found"); // important check
+
+                return Ok("Deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadExcel(IFormFile file)
+        {
+            var result = await _bussiness.UploadExcelAsync(file);
+
+            if (result.Contains("No file"))
+                return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }

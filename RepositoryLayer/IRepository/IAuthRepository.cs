@@ -10,5 +10,10 @@ namespace RepositoryLayer.IRepository
     public interface IAuthRepository
     {
         User GetUser(string username, string password);
+
+        void SaveRefreshToken(RefreshToken token);
+        RefreshToken GetRefreshToken(string token);
+        User GetUserById(int userId);
+        void SaveChanges();
     }
 }

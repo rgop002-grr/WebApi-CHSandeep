@@ -22,5 +22,25 @@ namespace RepositoryLayer.Repository
             return _context.Users
                 .FirstOrDefault(x => x.Username == username && x.Password == password);
         }
+        public void SaveRefreshToken(RefreshToken token)
+        {
+            _context.RefreshTokens.Add(token);
+        }
+
+        public RefreshToken GetRefreshToken(string token)
+        {
+            return _context.RefreshTokens
+                .FirstOrDefault(x => x.Token == token);
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _context.Users.FirstOrDefault(x => x.Id == userId);
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

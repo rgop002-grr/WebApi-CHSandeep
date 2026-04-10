@@ -10,5 +10,7 @@ namespace BussinessLayer.IBusiness
     public interface IAuthBussiness
     {
         string Authenticate(LoginDto model);
+        AuthResponseDto AuthenticateWithRefresh(LoginDto loginDTO);
+        AuthResponseDto RefreshToken(string refreshToken);
     }
 }
