@@ -10,5 +10,10 @@ namespace RepositoryLayer.IRepository
      public interface IProductRepository
     {
          List<Product> GetProducts();
+         Task<bool> AddProductAsync(Product product);
+        Task<bool> UpdateProductAsync(Product product);
+        Task<bool> DeleteProductAsync(int id);
+
+        Task InsertBulkAsync(List<Product> products);
     }
 }
